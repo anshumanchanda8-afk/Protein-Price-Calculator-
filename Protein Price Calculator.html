@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protein Price Calculator</title>
+  <style>
+    body { font-family: sans-serif; background-color: #f4f7f6; padding: 20px; display: flex; justify-content: center; }
+    .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 400px; width: 100%; }
+    h1 { text-align: center; color: #2c3e50; font-size: 24px; }
+    label { font-weight: bold; display: block; margin-top: 15px; }
+    input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+    button { width: 100%; padding: 12px; background-color: #27ae60; color: white; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; margin-top: 25px; cursor: pointer; }
+    #result { margin-top: 25px; padding: 15px; border-radius: 6px; font-weight: bold; text-align: center; }
+    .affordable { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .costly { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Is my protein's price in the affordable range?</h1>
+    <h2>Let's find out</h2>
+    <label for="brand">Your protein brand:</label>
+    <input type="text" id="brand" placeholder="e.g. MuscleBlaze">
+
+    <label for="cost">Total cost of the packet (in ₹):</label>
+    <input type="number" id="cost" placeholder="e.g. 3000">
+
+    <label for="weight">Total weight of the packet (in grams):</label>
+    <input type="number" id="weight" placeholder="e.g. 1000">
+
+    <label for="serving">Serving per scoop (in grams):</label>
+    <input type="number" id="serving" placeholder="e.g. 33">
+
+    <label for="protein">Protein per scoop (in grams):</label>
+    <input type="number" id="protein" placeholder="e.g. 25">
+
+    <!-- Standard HTML click handler -->
+    <button onclick="calculateProtein()">Calculate</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculateProtein() {
+        // Fetch values from inputs
+        let a = document.getElementById("brand").value;
+        let val_b = document.getElementById("cost").value;
+        let val_c = document.getElementById("weight").value;
+        let val_d = document.getElementById("serving").value;
+        let val_e = document.getElementById("protein").value;
+
+        let resultDiv = document.getElementById("result");
+
+        // Validation check
+        if (!a || !val_b || !val_c || !val_d || !val_e) {
+            resultDiv.className = "costly";
+            resultDiv.innerText = "Please fill out all the fields!";
+            return;
+        }
+
+        // Convert values to floating numbers
+        let b = parseFloat(val_b);
+        let c = parseFloat(val_c);
+        let d = parseFloat(val_d);
+        let e = parseFloat(val_e);
+
+        // Zero division protection
+        if (c === 0 || e === 0) {
+            resultDiv.className = "costly";
+            resultDiv.innerText = "Weight or Protein per scoop cannot be 0!";
+            return;
+        }
+
+        // Your exact logic converted to JavaScript
+        let f = (b * d) / (c * e);
+        let rounded_f = f.toFixed(2); // Rounds to two decimal places
+
+        if (f > 0 && f <= 4.5) {
+            resultDiv.className = "affordable";
+            resultDiv.innerText = a + "'s this protein is affordable since the cost of per gram of protein is ₹" + rounded_f;
+        } else {
+            resultDiv.className = "costly";
+            resultDiv.innerText = a + "'s this protein is very costly since the cost of per gram of protein is ₹" + rounded_f;
+        }
+    }
+  </script>
+
+</body>
+</html>
